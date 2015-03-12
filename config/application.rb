@@ -8,6 +8,8 @@ Bundler.require(*Rails.groups)
 
 module RslServer
   class Application < Rails::Application
+    # /lib/api/**.rb を自動で読み込む設定
+    config.autoload_paths += %W(#{config.root}/lib/api)
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -22,5 +24,11 @@ module RslServer
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    config.middleware.insert_before ActionDispatch::Static, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options, :put, :delete]
+      end
+    end
   end
 end

@@ -26,6 +26,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #make api
 gem 'grape'
 
+#クロスオリジン対応
+gem 'rack-cors', :require => 'rack/cors'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
