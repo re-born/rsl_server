@@ -38,14 +38,14 @@ class Document_API < Grape::API
       optional :title, type: String
     end
     # http://localhost:3000/api/v1/document
-    put ':id' do
+    patch ':id' do
       document = Document.find(params[:id])
       document.content = params[:content] if params[:content].present?
       document.title = params[:title] if params[:title].present?
       document.save
     end
 
-    desc "edit a document"
+    desc "delete a document"
     params do
       requires :id, type: Integer
     end
