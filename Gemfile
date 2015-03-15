@@ -25,6 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 #make api
 gem 'grape'
+gem 'grape-entity'
 
 #クロスオリジン対応
 gem 'rack-cors', :require => 'rack/cors'
