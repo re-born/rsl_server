@@ -8,6 +8,9 @@ Bundler.require(*Rails.groups)
 
 module RslServer
   class Application < Rails::Application
+    config.time_zone = 'Tokyo'
+    config.encoding = "utf-8"
+    config.i18n.default_locale = :ja
     # /lib/api/**.rb を自動で読み込む設定
     config.autoload_paths += %W(#{config.root}/lib/api)
     # Settings in config/environments/* take precedence over those specified here.

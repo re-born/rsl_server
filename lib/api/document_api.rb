@@ -2,17 +2,19 @@ class Document_API < Grape::API
   resource "documents" do
     helpers do
       def document_params
-        ActionController::Parameters.new(params).permit(:user_id, :content, :title, :tags)
+        ActionController::Parameters.new(params).permit(:user_id, :content, :title)
       end
-      def document_include(document)
-        document = document.includes :tags
+
+      def save_tags(document,tag_name)
+        tag = Tag.where(name: tag_name).first_or_create()
+        table_obj = DocumentTag.create(tag_id: tag.id, document_id: document.id)
       end
     end
+
     # ex) http://localhost:3000/api/document
     desc "returns all documents"
     get do
-      document = Document.all
-      document_include document
+      document = Document.includes(:tags)
       present document, with: Entities::Document
     end
 
@@ -33,25 +35,15 @@ class Document_API < Grape::API
       requires :user_id, type: Integer
       optional :tags, type: Array
     end
-    # http://localhost:3000/api/v1/document
+    # http://localhost:3000/api/document
     post do
       document = Document.new(document_params)
       if document.save
-        tags = params[:tags]
-        tags.each do |tag|
-          is_tag = Tag.find_by(name: tag)
-          unless is_tag
-            tag_obj = Tag.new(name: tag)
-            tag_obj.save
-            table_obj = DocumentTag.new(tag_id: tag_obj.id, document_id: document.id)
-            table_obj.save
-          else
-            table_obj = DocumentTag.new(tag_id: is_tag.id, document_id: document.id)
-            table_obj.save
-          end
+        params[:tags].each do |tag_name|
+          save_tags(document,tag_name)
         end
       else
-        "error"
+        document.errors.full_messages
       end
     end
 
@@ -61,11 +53,17 @@ class Document_API < Grape::API
       optional :title, type: String
       optional :tags, type: Array
     end
-    # http://localhost:3000/api/v1/document
+    # http://localhost:3000/api/document
     patch ':id' do
       document = Document.find(params[:id])
       document.content = params[:content] if params[:content].present?
       document.title = params[:title] if params[:title].present?
+      if params[:tags].present?
+        document.document_tags.each {|target| target.delete}
+        params[:tags].each do |tag_name|
+          save_tags(document,tag_name)
+        end
+      end
       document.save
     end
 
@@ -73,9 +71,10 @@ class Document_API < Grape::API
     params do
       requires :id, type: Integer
     end
-    # http://localhost:3000/api/v1/document
+    # http://localhost:3000/api/document
     delete ':id' do
       document = Document.find(params[:id])
+      DocumentTag.where(document_id: document.id).destroy
       document.destroy
     end
   end

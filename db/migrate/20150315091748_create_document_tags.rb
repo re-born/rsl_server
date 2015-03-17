@@ -7,6 +7,7 @@ class CreateDocumentTags < ActiveRecord::Migration
       t.integer :tag_id
 
       t.timestamps null: false
+      t.index [:tag_id, :document_id], unique: true
     end
   end
 end
