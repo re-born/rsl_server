@@ -42,10 +42,8 @@ class Document_API < Grape::API
         params[:tags].each do |tag_name|
           save_tags(document,tag_name)
         end
-        return document
-      else
-        return {error: document.errors.full_messages}
       end
+      return document
     end
 
     desc "edit a document"
