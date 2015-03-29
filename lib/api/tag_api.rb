@@ -5,7 +5,7 @@ class Tag_API < Grape::API
     end
 
     desc "get all tags"
-    # http://localhost:3000/api/tags/
+    # /api/tags/
     get do
       Tag.all
     end

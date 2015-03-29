@@ -9,4 +9,5 @@ class API < Grape::API
 
   mount Document_API
   mount Tag_API
+  mount User_API
 end

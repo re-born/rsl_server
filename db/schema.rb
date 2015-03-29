@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315091748) do
+ActiveRecord::Schema.define(version: 20150324150948) do
 
   create_table "document_tags", force: :cascade do |t|
     t.integer  "document_id"
@@ -36,6 +36,16 @@ ActiveRecord::Schema.define(version: 20150315091748) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.string   "login_id"
+    t.string   "password_digest"
+    t.integer  "card_id"
+    t.boolean  "admin_flag"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end

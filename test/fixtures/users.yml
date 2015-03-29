@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  login_id: MyString
+  password_digest: MyString
+  card_id: 1
+  admin_flag: false
+
+two:
+  name: MyString
+  login_id: MyString
+  password_digest: MyString
+  card_id: 1
+  admin_flag: false

@@ -11,7 +11,7 @@ class Document_API < Grape::API
       end
     end
 
-    # ex) http://localhost:3000/api/document
+    # http://localhost:3000/api/document
     desc "returns all documents"
     get do
       document = Document.includes(:tags)
@@ -19,11 +19,9 @@ class Document_API < Grape::API
     end
 
     desc "return a document"
-    params do
-      requires :id, type: Integer
-    end
+    params {}
     # http://localhost:3000/api/document/{:id}
-    get ':id' do
+    get ':id' , requirements: { id: /[0-9]*/ } do
       document = Document.find(params[:id])
       present document, with: Entities::Document
     end
@@ -55,7 +53,7 @@ class Document_API < Grape::API
       optional :tags, type: Array
     end
     # http://localhost:3000/api/document
-    patch ':id' do
+    patch ':id', requirements: { id: /[0-9]*/ } do
       document = Document.find(params[:id])
       document.content = params[:content] if params[:content].present?
       document.title = params[:title] if params[:title].present?
@@ -73,11 +71,8 @@ class Document_API < Grape::API
     end
 
     desc "delete a document"
-    params do
-      requires :id, type: Integer
-    end
-    # http://localhost:3000/api/document
-    delete ':id' do
+    params {}
+    delete ':id', requirements: { id: /[0-9]*/ } do
       document = Document.find(params[:id])
       DocumentTag.where(document_id: document.id).destroy
       document.destroy
