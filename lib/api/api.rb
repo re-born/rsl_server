@@ -1,3 +1,4 @@
+require_relative "helpers"
 class API < Grape::API
 
   # APIアクセスに接頭語を不可
@@ -7,7 +8,8 @@ class API < Grape::API
   # 未指定の場合にJSONで返すように変更（URLで指定可能）
   format :json
 
-  # helpers APIHelpers
+  helpers APIHelper
+
   mount Session
   mount Document_API
   mount Tag_API

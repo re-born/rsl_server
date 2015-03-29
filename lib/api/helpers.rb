@@ -1,5 +1,6 @@
-module ApiHelpers
+module APIHelper
   extend Grape::API::Helpers
+
   PRIVATE_TOKEN_PARAM = :auth_token
   PRIVATE_TOKEN_HEADER = 'X-Http-Access-Token'
 
