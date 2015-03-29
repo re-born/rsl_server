@@ -1,5 +1,9 @@
 class Document_API < Grape::API
   resource "documents" do
+    before do
+      authenticate!
+    end
+
     helpers do
       def document_params
         ActionController::Parameters.new(params).permit(:user_id, :content, :title)

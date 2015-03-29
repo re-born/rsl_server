@@ -11,7 +11,5 @@ class API < Grape::API
   helpers APIHelper
 
   mount Session
-  mount Document_API
-  mount Tag_API
-  mount User_API
+  mount GeneralAPI
 end
