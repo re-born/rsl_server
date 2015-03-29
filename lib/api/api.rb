@@ -7,6 +7,8 @@ class API < Grape::API
   # 未指定の場合にJSONで返すように変更（URLで指定可能）
   format :json
 
+  # helpers APIHelpers
+  mount Session
   mount Document_API
   mount Tag_API
   mount User_API

@@ -9,9 +9,10 @@ class Session < Grape::API
     post do
       user = User.find_by(login_id: params[:login_id])
       if user && user.authenticate(params[:password])
-        sign_in user
+        access_token = AccessToken.create(user_id: user.id)
+        present access_token, with: Entities::LoginInfo
       else
-        'error'
+        error!('Unauthorized.', 401)
       end
     end
   end

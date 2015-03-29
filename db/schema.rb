@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324150948) do
+ActiveRecord::Schema.define(version: 20150329061410) do
+
+  create_table "access_tokens", id: false, force: :cascade do |t|
+    t.string   "access_token", null: false
+    t.datetime "expires_at"
+    t.integer  "user_id",      null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "access_tokens", ["access_token"], name: "index_access_tokens_on_access_token", unique: true
+  add_index "access_tokens", ["user_id"], name: "index_access_tokens_on_user_id"
 
   create_table "document_tags", force: :cascade do |t|
     t.integer  "document_id"

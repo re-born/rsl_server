@@ -9,6 +9,11 @@ module Entities
   end
 
   class User < Grape::Entity
-    expose :id, :name, :card_id ,:created_at
+    expose :id, :name, :card_id, :created_at
+  end
+
+  class LoginInfo < Grape::Entity
+    expose :access_token
+    expose :user, using: Entities::User
   end
 end
