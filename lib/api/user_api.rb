@@ -26,6 +26,7 @@ class User_API < Grape::API
       requires :name, type: String
       requires :password, type: String
       requires :password_confirmation, type: String
+      optional :auth_flag, type: Boolean, default: false
       optional :card_id, type: Integer
     end
     post do
@@ -33,12 +34,13 @@ class User_API < Grape::API
       user.save
     end
 
-    desc "create user"
+    desc "edit user"
     params do
       requires :login_id, type: String
       requires :name, type: String
       requires :password, type: String
       requires :password_confirmation, type: String
+      optional :auth_flag, type: Boolean, default: false
       optional :card_id, type: Integer
     end
     patch do
