@@ -9,7 +9,7 @@ class API < Grape::API
   format :json
 
   helpers APIHelper
-
+  mount User_API
   mount Session
   mount GeneralAPI
 end

@@ -4,6 +4,10 @@ module APIHelper
   PRIVATE_TOKEN_PARAM = :access_token
   PRIVATE_TOKEN_HEADER = "Rsl-Http-Access-Token"
 
+  def valid_token?(access_token)
+    access_token && !access_token.expired?
+  end
+
   def authenticate!
     error!('Unauthorized. Invalid or expired token.', 401) unless current_user
   end

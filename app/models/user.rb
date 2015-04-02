@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :documents
   has_many :access_tokens
   before_save { self.login_id = login_id.downcase }
   validates :name,  presence: true, length: { maximum: 50 }, uniqueness: true

@@ -1,12 +1,8 @@
 class Document_API < Grape::API
   resource "documents" do
-    before do
-      authenticate!
-    end
-
     helpers do
       def document_params
-        ActionController::Parameters.new(params).permit(:user_id, :content, :title)
+        ActionController::Parameters.new(params).permit(:user_id, :content, :title, :tags)
       end
 
       def save_tags(document,tag_name)
@@ -39,14 +35,15 @@ class Document_API < Grape::API
     end
     # http://localhost:3000/api/document
     post do
+      puts 'aaaaa'
       document = Document.new(document_params)
       if document.save
         params[:tags].each do |tag_name|
           save_tags(document,tag_name)
         end
-        return document
+        present document, Entities::Document
       else
-        return {error: document.errors.full_messages}
+        error!(document.errors.full_messages, 400)
       end
     end
 
@@ -54,11 +51,13 @@ class Document_API < Grape::API
     params do
       optional :content, type: String
       optional :title, type: String
+      requires :user_id, type: String
       optional :tags, type: Array
     end
     # http://localhost:3000/api/document
     patch ':id', requirements: { id: /[0-9]*/ } do
       document = Document.find(params[:id])
+      error!("you can not edit this docs", 401) unless document.user_id == current_user.id
       document.content = params[:content] if params[:content].present?
       document.title = params[:title] if params[:title].present?
       if params[:tags].present?
@@ -68,7 +67,7 @@ class Document_API < Grape::API
         end
       end
       if document.save
-        document
+        present document, Entities::Document
       else
         return {error: document.errors.full_messages}
       end

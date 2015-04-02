@@ -36,9 +36,9 @@ ActiveRecord::Schema.define(version: 20150329061410) do
   add_index "document_tags", ["tag_id"], name: "index_document_tags_on_tag_id"
 
   create_table "documents", force: :cascade do |t|
-    t.integer  "user_id"
-    t.text     "content"
-    t.string   "title"
+    t.integer  "user_id",    null: false
+    t.text     "content",    null: false
+    t.string   "title",      null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
