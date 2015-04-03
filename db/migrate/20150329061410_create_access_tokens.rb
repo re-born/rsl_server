@@ -1,6 +1,6 @@
 class CreateAccessTokens < ActiveRecord::Migration
   def change
-    create_table :access_tokens,:id=>false do |t|
+    create_table :access_tokens do |t|
       t.string :access_token, null: false
       t.datetime :expires_at
       t.integer :user_id, null: false

@@ -1,5 +1,7 @@
 class Session < Grape::API
   resource "sessions" do
+
+
     desc 'Check Valid Auth Token'
     params do
       requires :access_token, type: String
@@ -20,9 +22,19 @@ class Session < Grape::API
     post do
       user = User.find_by(login_id: params[:login_id])
       return error!('Unauthorized. Invalid or expired token.', 401) unless user.present? && user.authenticate(params[:password])
-      puts 'aaa'
       access_token = AccessToken.create(user_id: user.id)
       present access_token, with: Entities::LoginInfo
+    end
+
+    desc "User Logout"
+    params do
+    end
+    # http://localhost:3000/api/sessions
+    delete do
+      authenticate!
+      token = AccessToken.find_by(access_token: authenticate_token)
+      puts token.access_token
+      token.destroy
     end
   end
 end

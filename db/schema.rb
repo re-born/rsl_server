@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20150329061410) do
 
-  create_table "access_tokens", id: false, force: :cascade do |t|
+  create_table "access_tokens", force: :cascade do |t|
     t.string   "access_token", null: false
     t.datetime "expires_at"
     t.integer  "user_id",      null: false

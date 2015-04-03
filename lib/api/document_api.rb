@@ -35,7 +35,6 @@ class Document_API < Grape::API
     end
     # http://localhost:3000/api/document
     post do
-      puts 'aaaaa'
       document = Document.new(document_params)
       if document.save
         params[:tags].each do |tag_name|
@@ -57,7 +56,7 @@ class Document_API < Grape::API
     # http://localhost:3000/api/document
     patch ':id', requirements: { id: /[0-9]*/ } do
       document = Document.find(params[:id])
-      error!("you can not edit this docs", 401) unless document.user_id == current_user.id
+      error!("you can not edit this docs", 403) unless document.user_id == current_user.id
       document.content = params[:content] if params[:content].present?
       document.title = params[:title] if params[:title].present?
       if params[:tags].present?
