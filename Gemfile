@@ -38,6 +38,10 @@ gem 'bcrypt-ruby', '3.1.2'
 gem 'devise', '~> 3.0.0'
 gem 'cancancan'
 
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
