@@ -76,7 +76,7 @@ class Document_API < Grape::API
     params {}
     delete ':id', requirements: { id: /[0-9]*/ } do
       document = Document.find(params[:id])
-      DocumentTag.where(document_id: document.id).destroy
+      DocumentTag.delete_all(document_id: params[:id])
       document.destroy
     end
   end
