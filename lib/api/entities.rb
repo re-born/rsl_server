@@ -8,7 +8,7 @@ module Entities
   end
 
   class Document < Grape::Entity
-    expose :id, :content, :title, :user_id, :created_at
+    expose :id, :content, :title,:tag_ids, :user_id, :created_at
     expose :tags, using: Entities::Tag
     expose :user, using: Entities::User
   end
