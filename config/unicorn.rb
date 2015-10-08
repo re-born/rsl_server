@@ -3,16 +3,16 @@ application = 'rsl_server'
 worker_processes 2   # 立ち上げるworker数
 working_directory "/var/www/#{application}"
 
-listen "/var/run/unicorn/unicorn_#{application}.sock"   # Unix Domain Socket
+listen "/var/run/rsl_server/unicorn_#{application}.sock"   # Unix Domain Socket
 
-pid "/var/run/unicorn/unicorn_#{application}.pid"       # PIDファイル出力先
+pid "/var/run/rsl_server/unicorn_#{application}.pid"       # PIDファイル出力先
 
 timeout 60
 
 preload_app true
 
-stdout_path "/var/log/unicorn/unicorn.stdout_#{application}.log"  # 標準出力ログ出力先
-stderr_path "/var/log/unicorn/unicorn.stderr_#{application}.log"  # 標準エラー出力ログ出力先
+stdout_path "/var/log/rsl_server/unicorn.stdout_#{application}.log"  # 標準出力ログ出力先
+stderr_path "/var/log/rsl_server/unicorn.stderr_#{application}.log"  # 標準エラー出力ログ出力先
 
 GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
 
