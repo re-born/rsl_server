@@ -66,3 +66,4 @@ group :development, :test do
   gem 'pry-stack_explorer' # スタックをたどれる
 
 end
+
