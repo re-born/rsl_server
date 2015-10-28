@@ -19,7 +19,7 @@ class Document < ActiveRecord::Base
 #{user.name} wrote new wiki
 Look at #{url}
 EOS
-    slack_notify(message, '#dev')
+    slack_notify(message, '#rsl_2015')
   end
 
   def url
